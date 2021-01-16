@@ -101,11 +101,11 @@ $items = [
     <?php
       var_dump($items);
       echo '------------------------------------------------------------';
-      $price_arr = [];
+      $priceArr = [];
       foreach($items as $item) {
-        $price_arr[] = $item['price'];
+        $priceArr[] = $item['price'];
       }
-      array_multisort($price_arr, $items);
+      array_multisort($priceArr, $items);
       var_dump($items);
 
       // function compare($a, $b) {
