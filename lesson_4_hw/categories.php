@@ -206,6 +206,8 @@ function getMultiArrRecursive(array $arr, $parentId = null)
 }
 
 // монструозное решение придуманное самостоятельно. Без рекурсии.
+
+// фукция для получения нового массива, в котором ключи элементов соответвуют значениям их id
 function getAssocArr($arr)
 {
     $keys = [];
@@ -216,7 +218,8 @@ function getAssocArr($arr)
 }
 
 
-function getAllParents(array $arr)
+// функция для получения массива с id всех элементов, которые являются для кого-то родительскими
+function getParentsIds(array $arr)
 {
     $parents = [];
     foreach ($arr as $elem) {
@@ -226,12 +229,14 @@ function getAllParents(array $arr)
     }
 
     $parents = array_unique($parents);
-    rsort($parents);
+    sort($parents);
     return $parents;
 }
+var_dump(getParentsIds($categories));
 
 
-function getElemesWithoutChildren(array $arr, array $parents)
+// функция для получения id элементов, которые не являются родительскими ни для кого
+function getElementsWithoutChildrenIds(array $arr, array $parents)
 {
     $allIds = [];
     foreach ($arr as $elem) {
@@ -239,31 +244,36 @@ function getElemesWithoutChildren(array $arr, array $parents)
     }
     $children = array_diff($allIds, $parents);
     sort($children);
+
     return $children;
 }
 
 
 function getMultiArr(array $arr)
 {
-    $elemsWithChildrenIds = getAllParents($arr);
-    $elemsWithoutChildrenIds = getElemesWithoutChildren($arr, $elemsWithChildrenIds);
-    $tmpArr = getAssocArr($arr);
+    $elemsWithChildrenIds = getParentsIds($arr);
+    $elemsWithoutChildrenIds = getElementsWithoutChildrenIds($arr, $elemsWithChildrenIds);
+    $newArr = getAssocArr($arr);
+
     foreach ($elemsWithoutChildrenIds as $id) {
-        $parentId = $tmpArr[$id]['parent_category'];
-        $tmpArr[$parentId]['children'][] = $tmpArr[$id];
-        unset($tmpArr[$id]);
+        $parentId = $newArr[$id]['parent_category'];
+        $newArr[$parentId]['children'][] = $newArr[$id];
+        unset($newArr[$id]);
     }
+
     foreach ($elemsWithChildrenIds as $id) {
-        $parentId = $tmpArr[$id]['parent_category'];
+        $parentId = $newArr[$id]['parent_category'];
         if ($parentId) {
-            $tmpArr[$parentId]['children'][] = $tmpArr[$id];
-            unset($tmpArr[$id]);
+            $newArr[$parentId]['children'][] = $newArr[$id];
+            unset($newArr[$id]);
         }
     }
-    return array_values($tmpArr);
+
+    return array_values($newArr);
 }
 
 
 // $multiArr = getMultiArrRecursive($categories);
 // $multiArr = getMultiArr($categories);
+
 var_dump($multiArr);
