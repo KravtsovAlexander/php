@@ -208,7 +208,7 @@ function getMultiArrRecursive(array $arr, $parentId = null)
 // монструозное решение придуманное самостоятельно. Без рекурсии.
 
 // фукция для получения нового массива, в котором ключи элементов соответвуют значениям их id
-function getAssocArr($arr)
+function getAssocArr(array $arr)
 {
     $keys = [];
     foreach ($arr as $elem) {
@@ -232,7 +232,6 @@ function getParentsIds(array $arr)
     sort($parents);
     return $parents;
 }
-var_dump(getParentsIds($categories));
 
 
 // функция для получения id элементов, которые не являются родительскими ни для кого
@@ -255,25 +254,23 @@ function getMultiArr(array $arr)
     $elemsWithoutChildrenIds = getElementsWithoutChildrenIds($arr, $elemsWithChildrenIds);
     $newArr = getAssocArr($arr);
 
-    foreach ($elemsWithoutChildrenIds as $id) {
-        $parentId = $newArr[$id]['parent_category'];
-        $newArr[$parentId]['children'][] = $newArr[$id];
-        unset($newArr[$id]);
-    }
-
-    foreach ($elemsWithChildrenIds as $id) {
-        $parentId = $newArr[$id]['parent_category'];
-        if ($parentId) {
+    // крутится до тех пор, пока в текущем массиве можно найти элементы, которые являются родительскими
+    // для других элементов этого же массива
+    while ($elemsWithChildrenIds) {
+        foreach ($elemsWithoutChildrenIds as $id) {
+            $parentId = $newArr[$id]['parent_category'];
             $newArr[$parentId]['children'][] = $newArr[$id];
             unset($newArr[$id]);
         }
+
+        $elemsWithChildrenIds = getParentsIds($newArr);
+        $elemsWithoutChildrenIds = getElementsWithoutChildrenIds($newArr, $elemsWithChildrenIds);
+        $newArr = getAssocArr($newArr);
     }
 
     return array_values($newArr);
 }
 
-
 // $multiArr = getMultiArrRecursive($categories);
 // $multiArr = getMultiArr($categories);
-
-var_dump($multiArr);
+// var_dump($multiArr);
