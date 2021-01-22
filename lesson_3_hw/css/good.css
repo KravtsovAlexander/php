@@ -1,0 +1,27 @@
+.good {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.good h3 {
+    font-size: 40px;
+}
+
+.good a {
+    margin-top: 1rem;
+    font-size: 20px;
+}
+
+.error {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
+

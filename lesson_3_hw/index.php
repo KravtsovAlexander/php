@@ -67,6 +67,7 @@ $items = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>php_lesson3_hw</title>
 </head>
 
@@ -74,7 +75,7 @@ $items = [
     <section>
         <h1><i>1. Вывести в html информацию о товарах из массива $goods. Информацию о характеристиках товара (description) выводить в таблице.</i></h1>
         <?php foreach ($goods as $good) : ?>
-            <div style="display: inline-block">
+            <div class="card">
                 <h3><?php echo $good['title'] ?></h3>
                 <p>Цена: <?php echo $good['price'] ?></p>
                 <img src="img/goods/<?php echo $good['img'] ?>" alt="<?php echo $good['title'] ?>" height=200 width=200>
@@ -94,6 +95,7 @@ $items = [
                         </tr>
                     <?php endforeach; ?>
                 </table>
+                <a href="/good.php?id=<?php echo $good['id'] ?>" class="link">Подробнее</a>
             </div>
         <?php endforeach; ?>
     </section>
