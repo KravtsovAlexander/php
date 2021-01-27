@@ -1,10 +1,6 @@
 <?php
 
 require_once 'functions.php';
-$test = 'http://asldfk';
-var_dump($test);
-$test = filter_var($test, FILTER_VALIDATE_URL);
-var_dump($test);
 
 $server = $_SERVER;
 if ($server['REQUEST_METHOD'] === 'POST') {
@@ -17,22 +13,18 @@ if ($server['REQUEST_METHOD'] === 'POST') {
     $url = trim($url);
     if (!$url) {
         $message = 'Строка не должна быть пустой!';
+    } elseif (($url = filter_var($url, FILTER_VALIDATE_URL)) === false) {
+        $message = 'Неверный тип ссылки';
+    } elseif (($id = get_id($db_file, $url)) !== false) {
+        $short_link = $domain . $id;
     } else {
-        if (($url = filter_var($url, FILTER_VALIDATE_URL)) === false) {
-            $message = 'Неверный тип ссылки';
-        } else {
-            if (($id = get_id($db_file, $url)) !== false) {
-                $short_link = $domain . $id;
-            } else {
 
-                do {
-                    $id = generate_id($url);
-                } while (check_for_match($db_file, $id));
+        do {
+            $id = generate_id($url);
+        } while (check_for_match($db_file, $id));
 
-                add_link($db_file, $url, $id);
-                $short_link = $domain . $id;
-            }
-        }
+        add_link($db_file, $url, $id);
+        $short_link = $domain . $id;
     }
 }
 
