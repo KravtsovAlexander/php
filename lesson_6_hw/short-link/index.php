@@ -15,7 +15,7 @@ if ($server['REQUEST_METHOD'] === 'POST') {
         $message = 'Строка не должна быть пустой!';
     } elseif (($url = filter_var($url, FILTER_VALIDATE_URL)) === false) {
         $message = 'Неверный тип ссылки';
-    } elseif (($id = get_id($db_file, $url)) !== false) {
+    } elseif ($id = get_id($db_file, $url)) {
         $short_link = $domain . $id;
     } else {
 
