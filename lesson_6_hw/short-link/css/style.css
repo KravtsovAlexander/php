@@ -1,0 +1,24 @@
+input[type="url"] {
+  display: block;
+  width: 100%;
+}
+
+.input {
+  margin: 2rem auto;
+  width: 60%;
+}
+
+.input p {
+  font-size: 12px;
+  margin: 0;
+  padding: 5px;
+}
+
+.output {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.btn {
+  text-align: center;
+}
