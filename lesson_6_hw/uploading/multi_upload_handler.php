@@ -93,3 +93,4 @@ function show_message($good_files, $bad_files, $invalid_size, $invalid_type)
         }
     }
 }
+
