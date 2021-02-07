@@ -1,0 +1,19 @@
+{
+    "name": "user/lesson_11_hw",
+    "description": "lesson 11 hw",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KravtsovAlexander",
+            "email": "linejjka@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Autoload\\Homework\\": "src/"
+        }
+    }
+}
